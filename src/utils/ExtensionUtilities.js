@@ -1,4 +1,4 @@
-import { Ray, Matrix4, Mesh, Vector3, Sphere, BatchedMesh, REVISION } from 'three';
+import { Ray, Matrix4, Mesh, Vector3, Box3, Sphere, BatchedMesh, REVISION } from 'three';
 import { convertRaycastIntersect } from './GeometryRayIntersectUtilities.js';
 import { MeshBVH } from '../core/MeshBVH.js';
 
@@ -42,6 +42,12 @@ function acceleratedBatchedMeshRaycast( raycaster, intersects ) {
 		const oldBoundsTree = _mesh.geometry.boundsTree;
 		const oldDrawRange = _mesh.geometry.drawRange;
 
+		if ( _mesh.geometry.boundingBox === null ) {
+
+			_mesh.geometry.boundingBox = new Box3();
+
+		}
+		
 		if ( _mesh.geometry.boundingSphere === null ) {
 
 			_mesh.geometry.boundingSphere = new Sphere();
